@@ -1,0 +1,12 @@
+Package: afterGGIR
+Type: Package
+Title: Get along with GGIR
+Version: 0.1.0
+Author: Kenn Konstabel
+Maintainer: Kenn <kenn.konstabel@tai.ee>
+Description: Get along with GGIR
+License: $$$
+Encoding: UTF-8
+LazyData: true
+Depends: GGIR
+RoxygenNote: 7.1.2
