@@ -1,3 +1,16 @@
+#' Load
+#'
+#' @param file 
+#' @param to.list 
+#' @param Unlist 
+#' @param spray 
+#' @param delete.parent 
+#' @param Attach 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 Load <- function (file, to.list = TRUE, Unlist = TRUE, spray = FALSE, 
                   delete.parent = FALSE, Attach = FALSE) 
 {

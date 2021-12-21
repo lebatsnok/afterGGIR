@@ -1,5 +1,23 @@
 #' afterGGIR
 #'
+#' @param andmekaust 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+afterGGIR <- function(andmekaust){
+  ggirrikaust <- paste0("results/output_", andmekaust, "/meta/basic/")
+  if(!file.exists("rda")) dir.create("rda")
+  for(iii in 1:length(dir(ggirrikaust))) {
+    #print(iii)
+    foo <- decodeGGIR(iii, andmekaust, minimize=TRUE)
+    save(foo, file=paste0("rda/", attr(foo, "filename"), ".rda"))
+  }
+}
+
+#' decode GGIR
+#'
 #' @param x 
 #' @param folder 
 #' @param minimize 
@@ -8,7 +26,7 @@
 #' @export
 #'
 #' @examples
-afterGGIR <- function(x, folder = NULL, minimize=FALSE){
+decodeGGIR <- function(x, folder = NULL, minimize=FALSE){
   if(!is.null(folder)) foo <- loadg(x, folder) else foo <- x
   
   freq <- as.numeric(as.character(foo$ggir1$I$header["Measurement_Frequency",1]))
@@ -44,8 +62,29 @@ afterGGIR <- function(x, folder = NULL, minimize=FALSE){
             wins = wins)
 }
 
-
 #' summarizeGGIR
+#'
+#' @param fn 
+#' @param toexcel 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+summarizeGGIR <- function(fn, toexcel = FALSE){
+  filelist <- dir(fn, full.names = TRUE)
+  res <- lapply(filelist, function(x) summarizeGGIR1(Load(x)))
+  res <- do.call(rbind, res)
+  if(toexcel){
+    outname <- paste0("results-", fn, ".xlsx")
+    openxlsx::write.xlsx(res, outname)
+    cat("Results written to ", outname)
+  }
+  res
+}
+
+
+#' summarizeGGIR1
 #'
 #' @param x 
 #'
@@ -53,29 +92,34 @@ afterGGIR <- function(x, folder = NULL, minimize=FALSE){
 #' @export
 #'
 #' @examples
-summarizeGGIR <- function(x){
+summarizeGGIR1 <- function(x){
   #browser()
   file <- attr(x, "filename")
   # browser()
   id <- strsplit(file, "_")[[1]][1]
   if(!"day" %in% names(x)) x$day <- as.Date(trunc(x$timestamp, "days"))
-  xS <- split(x, x$day) 
-  res <- do.call(rbind, lapply(xS, function(.){
+  stats <- function(.){
     day <- .$day[1]
     mean.enmo <- mean(.$ENMO)
     weartime <- table(.$nonwearscore)["0"] / 60
+    awakeweartime <- sum(.$nonwearscore %in% "0" & !.$asleep %in% "1")/60
     sleeptime <- table(.$asleep)["1"]/60
     brx <- c(0,52, 192, 540, Inf)/1000
-    timeinintensities <- hist(.$ENMO[x$nonwearscore==0], breaks=brx, plot=FALSE)$counts / 60
+    timeinintensities <- hist(.$ENMO[.$nonwearscore==0 & !.$asleep %in% "1"], breaks=brx, plot=FALSE)$counts / 60
     tin <- as.data.frame(setNames(as.list(timeinintensities), c("sed", "lig", "mod", "vig")))
     #browser()
     res <- data.frame(day, wd = format(day, "%u"), 
                       mean.enmo, 
                       weartime = unname(weartime), 
+                      awakeweartime = unname(awakeweartime),
                       sleeptime = unname(sleeptime),  
                       tin)
     res
-  }))
+  }
+  
+  
+  xS <- split(x, x$day)
+  res <- do.call(rbind, lapply(xS, stats))
   
   uni <- with(attr(x, "slip"), data.frame(date2 = as.Date(strptime(calendar_date, "%d/%m/%Y")), sleeponset = sleeponset, wakeup = wakeup, sleepduration = SptDuration,
                                           stringsAsFactors=FALSE))

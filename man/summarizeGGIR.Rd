@@ -4,10 +4,12 @@
 \alias{summarizeGGIR}
 \title{summarizeGGIR}
 \usage{
-summarizeGGIR(x)
+summarizeGGIR(fn, toexcel = FALSE)
 }
 \arguments{
-\item{x}{}
+\item{fn}{}
+
+\item{toexcel}{}
 }
 \value{
 

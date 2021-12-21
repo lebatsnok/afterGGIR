@@ -8,5 +8,5 @@ Description: Get along with GGIR
 License: $$$
 Encoding: UTF-8
 LazyData: true
-Depends: GGIR
+Depends: GGIR, openxlsx
 RoxygenNote: 7.1.2
