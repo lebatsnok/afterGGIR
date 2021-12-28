@@ -7,8 +7,9 @@
 #'
 #' @examples
 afterGGIR <- function(andmekaust, verbose=TRUE){
-  ggirrikaust <- paste0("results/output_", andmekaust, "/meta/basic/")
+  ggirrikaust <- paste0("results/output_", andmekaust, "/meta/basic")
   if(!file.exists(ggirrikaust)) stop("Folder ", ggirrikaust, " does not exist, check your working directory using getwd() if you think it should :-)")
+  ggirrikaust <- paste0(ggirrikaust, "/")
   if(!file.exists("rda")) dir.create("rda")
   for(iii in 1:length(dir(ggirrikaust))) {
     #print(iii)
