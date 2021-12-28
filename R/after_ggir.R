@@ -18,10 +18,10 @@ afterGGIR <- function(andmekaust, verbose=TRUE){
       fn <- foo[[1]]
       if(verbose) cat(fn, "\n")
     } else {
+      save(foo, file=paste0("rda/", attr(foo, "filename"), ".rda"))
       fn <- attr(foo, "filename")
       if(verbose) cat(fn, " ... OK \n")      
     }
-    save(foo, file=paste0("rda/", attr(foo, "filename"), ".rda"))
   }
 }
 
