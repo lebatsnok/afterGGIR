@@ -6,12 +6,21 @@
 #' @export
 #'
 #' @examples
-afterGGIR <- function(andmekaust){
+afterGGIR <- function(andmekaust, verbose=TRUE){
   ggirrikaust <- paste0("results/output_", andmekaust, "/meta/basic/")
+  if(!file.exists(ggirrikaust)) stop("Folder ", ggirrikaust, " does not exist, check your working directory using getwd() if you think it should :-)")
   if(!file.exists("rda")) dir.create("rda")
   for(iii in 1:length(dir(ggirrikaust))) {
     #print(iii)
-    foo <- decodeGGIR(iii, andmekaust, minimize=TRUE)
+    foo <- try(decodeGGIR(iii, andmekaust, minimize=TRUE))
+    if(verbose) cat(iii, "\tProcessing GGIR's output ... ")
+    if(inherits(foo, "try-error")){
+      fn <- foo[[1]]
+      if(verbose) cat(fn, "\n")
+    } else {
+      fn <- attr(foo, "filename")
+      if(verbose) cat(fn, " ... OK \n")      
+    }
     save(foo, file=paste0("rda/", attr(foo, "filename"), ".rda"))
   }
 }
@@ -59,7 +68,8 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE){
             folder = foo$ggir1$filefoldername,
             freq = freq, 
             slip = slip, 
-            wins = wins)
+            wins = wins,
+            class = c("afterGGIR", "data.frame"))
 }
 
 #' summarizeGGIR

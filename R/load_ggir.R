@@ -51,7 +51,10 @@ loadg <- function(FN, OD="", browse = FALSE){
   FNS <- rep(FN1, 5)
   FNS[1] <- paste0("meta_", FNS[1])
   FNS <- paste0(paste(PS, FNS, sep ="/"), ".RData")
-  if(!all(sapply(FNS, file.exists))) stop("!all(file.exists) :-((")
+  if(!all(sapply(FNS, file.exists))) {
+    whim <- paste(names(which(!sapply(FNS, file.exists))), collapse="|")
+    stop("Some .RData files missing from GGIR output:  ", whim, " ", call.=FALSE)
+    }
   RES <- sapply(FNS, Load)
   ggid <- names(RES); names(RES) <- paste0("ggir", 1:5)
   RES$file <- FN1

@@ -4,7 +4,7 @@
 \alias{afterGGIR}
 \title{afterGGIR}
 \usage{
-afterGGIR(andmekaust)
+afterGGIR(andmekaust, verbose = TRUE)
 }
 \arguments{
 \item{andmekaust}{}
