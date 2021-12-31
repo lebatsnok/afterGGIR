@@ -4,10 +4,10 @@
 \alias{afterGGIR}
 \title{afterGGIR}
 \usage{
-afterGGIR(andmekaust, verbose = TRUE)
+afterGGIR(datadir, verbose = TRUE)
 }
 \arguments{
-\item{andmekaust}{}
+\item{datadir}{Name of the raw data folder}
 }
 \value{
 

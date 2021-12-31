@@ -7,15 +7,15 @@
 decodeGGIR(x, folder = NULL, minimize = FALSE)
 }
 \arguments{
-\item{x}{}
+\item{x}{Number or name of the file to be read in}
 
-\item{folder}{}
+\item{folder}{Name of the raw data folder}
 
-\item{minimize}{}
+\item{minimize}{set TRUE to forget some of the data (mean light, temperature etc)}
 }
 \value{
 
 }
 \description{
-decode GGIR
+Lorem ipsum
 }

@@ -1,12 +1,10 @@
 #' afterGGIR
 #'
-#' @param andmekaust 
+#' @param datadir Name of the raw data folder 
 #'
 #' @return
 #' @export
-#'
-#' @examples
-afterGGIR <- function(andmekaust, verbose=TRUE){
+afterGGIR <- function(datadir, verbose=TRUE){
   ggirrikaust <- paste0("results/output_", andmekaust, "/meta/basic")
   if(!file.exists(ggirrikaust)) stop("Folder ", ggirrikaust, " does not exist, check your working directory using getwd() if you think it should :-)")
   ggirrikaust <- paste0(ggirrikaust, "/")
@@ -27,15 +25,15 @@ afterGGIR <- function(andmekaust, verbose=TRUE){
 }
 
 #' decode GGIR
+#' 
+#' Lorem ipsum
 #'
-#' @param x 
-#' @param folder 
-#' @param minimize 
+#' @param x Number or name of the file to be read in
+#' @param folder Name of the raw data folder
+#' @param minimize set TRUE to forget some of the data (mean light, temperature etc)
 #'
 #' @return
 #' @export
-#'
-#' @examples
 decodeGGIR <- function(x, folder = NULL, minimize=FALSE){
   if(!is.null(folder)) foo <- loadg(x, folder) else foo <- x
   
