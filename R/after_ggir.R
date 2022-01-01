@@ -5,13 +5,13 @@
 #' @return
 #' @export
 afterGGIR <- function(datadir, verbose=TRUE){
-  ggirrikaust <- paste0("results/output_", andmekaust, "/meta/basic")
-  if(!file.exists(ggirrikaust)) stop("Folder ", ggirrikaust, " does not exist, check your working directory using getwd() if you think it should :-)")
-  ggirrikaust <- paste0(ggirrikaust, "/")
+  ggirrdirr <- paste0("results/output_", datadir, "/meta/basic")
+  if(!file.exists(ggirrdirr)) stop("Folder ", ggirrdirr, " does not exist, check your working directory using getwd() if you think it should :-)")
+  ggirrikaust <- paste0(ggirrdirr, "/")
   if(!file.exists("rda")) dir.create("rda")
-  for(iii in 1:length(dir(ggirrikaust))) {
+  for(iii in 1:length(dir(ggirrdirr))) {
     #print(iii)
-    foo <- try(decodeGGIR(iii, andmekaust, minimize=TRUE))
+    foo <- try(decodeGGIR(iii, datadir, minimize=TRUE))
     if(verbose) cat(iii, "\tProcessing GGIR's output ... ")
     if(inherits(foo, "try-error")){
       fn <- foo[[1]]
