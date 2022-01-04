@@ -4,7 +4,7 @@
 \alias{decodeGGIR}
 \title{decode GGIR}
 \usage{
-decodeGGIR(x, folder = NULL, minimize = FALSE)
+decodeGGIR(x, folder = NULL, minimize = FALSE, sib = FALSE)
 }
 \arguments{
 \item{x}{Number or name of the file to be read in}
@@ -12,6 +12,8 @@ decodeGGIR(x, folder = NULL, minimize = FALSE)
 \item{folder}{Name of the raw data folder}
 
 \item{minimize}{set TRUE to forget some of the data (mean light, temperature etc)}
+
+\item{sib}{set TRUE to report sustained inactivity periods (attr(res, "sib"))}
 }
 \value{
 

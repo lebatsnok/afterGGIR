@@ -8,8 +8,8 @@ find_windows(
   E,
   A = "rda",
   mins = 30,
-  E.code = "id",
-  E.time = "time",
+  codevar = "id",
+  timevar = "time",
   extramins = 5,
   cuts = c(sed = 0, lig = 52, mod = 192, vig = 540)
 )
@@ -21,13 +21,13 @@ find_windows(
 
 \item{mins}{width of the activity window (in minutes) i.e. how much time before the event to consider}
 
-\item{extramins}{extra minutes between the end of activity window and the event (a negative number might be used if activity AFTER rather than BEFORE the event is of interest)}
-
-\item{cuts}{cutoffs for activity categories: a named vector of lower thresholds}
-
 \item{codevar}{name of the ID variable in the data frame E (unique identifier of each person)}
 
 \item{timevar}{name of the `time` variable in the data frame E (must be of POSIXt type or converted before analysis)}
+
+\item{extramins}{extra minutes between the end of activity window and the event (a negative number might be used if activity AFTER rather than BEFORE the event is of interest)}
+
+\item{cuts}{cutoffs for activity categories: a named vector of lower thresholds}
 }
 \value{
 A data frame (E) with extra variables added

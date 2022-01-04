@@ -4,10 +4,14 @@
 \alias{afterGGIR}
 \title{afterGGIR}
 \usage{
-afterGGIR(datadir, verbose = TRUE)
+afterGGIR(datadir, sib = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{datadir}{Name of the raw data folder}
+
+\item{sib}{Set TRUE to include a table of sustained inactivity periods from GGIR output}
+
+\item{verbose}{set FALSE to suppress bloody messages}
 }
 \value{
 

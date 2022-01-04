@@ -1,17 +1,19 @@
 #' afterGGIR
 #'
-#' @param datadir Name of the raw data folder 
+#' @param datadir Name of the raw data folder
+#' @param sib Set TRUE to include a table of sustained inactivity periods from GGIR output
+#' @param verbose set FALSE to suppress bloody messages
 #'
 #' @return
 #' @export
-afterGGIR <- function(datadir, verbose=TRUE){
+afterGGIR <- function(datadir, sib=FALSE, verbose=TRUE){
   ggirrdirr <- paste0("results/output_", datadir, "/meta/basic")
   if(!file.exists(ggirrdirr)) stop("Folder ", ggirrdirr, " does not exist, check your working directory using getwd() if you think it should :-)")
   ggirrikaust <- paste0(ggirrdirr, "/")
   if(!file.exists("rda")) dir.create("rda")
   for(iii in 1:length(dir(ggirrdirr))) {
     #print(iii)
-    foo <- try(decodeGGIR(iii, datadir, minimize=TRUE))
+    foo <- try(decodeGGIR(iii, datadir, sib=sib, minimize=TRUE))
     if(verbose) cat(iii, "\tProcessing GGIR's output ... ")
     if(inherits(foo, "try-error")){
       fn <- foo[[1]]
@@ -31,18 +33,20 @@ afterGGIR <- function(datadir, verbose=TRUE){
 #' @param x Number or name of the file to be read in
 #' @param folder Name of the raw data folder
 #' @param minimize set TRUE to forget some of the data (mean light, temperature etc)
+#' @param sib set TRUE to report sustained inactivity periods (attr(res, "sib"))
 #'
 #' @return
 #' @export
-decodeGGIR <- function(x, folder = NULL, minimize=FALSE){
+decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=FALSE){
   if(!is.null(folder)) foo <- loadg(x, folder) else foo <- x
   
   freq <- as.numeric(as.character(foo$ggir1$I$header["Measurement_Frequency",1]))
   wins <- (foo$ggir1$M$windowsizes)
   mika <- foo$ggir1$M$metalong
   aere <- foo$ggir2$IMP$metashort
-  #slip0 <- foo$ggir3$sib.cla.sum ## kestvad mitteaktiivsusperioodid
+  if(sib) inactivity_periods <- foo$ggir3$sib.cla.sum ## kestvad mitteaktiivsusperioodid
   slip <- foo$ggir4  ## uneajad päevade kaupa
+  sleepOK <- !identical(slip, "missing")  ## kas GGIRRi uneanalüüs õnnestus??
   posify <- function(.) strptime(., "%Y-%m-%dT%H:%M:%S")
   starta <- posify(aere$timestamp[1])
   startm <- posify(mika$timestamp[1])
@@ -52,9 +56,14 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE){
   aere$xmin <- as.character(cut(aere$timestamp, "10 mins"))
   aere <- cbind(aere[, c(1,4,2,3)], mika[match(aere$xmin, mika$xmin), c(2,3,4,5, 6, 7)])
   aere$asleep <- 0
-  slip$onset <- strptime(with(slip, paste(calendar_date, sleeponset_ts)), "%d/%m/%Y %H:%M:%S")
-  slip$end <- with(slip, onset + SptDuration*60*60)
-  for(i in 1:nrow(slip)) aere$asleep[aere$timestamp>=slip$onset[i] & aere$timestamp<=slip$end[i]] <- 1
+  if(sleepOK){
+    slip$onset <- strptime(with(slip, paste(calendar_date, sleeponset_ts)), "%d/%m/%Y %H:%M:%S")
+    slip$end <- with(slip, onset + SptDuration*60*60)
+    for(i in 1:nrow(slip)) aere$asleep[aere$timestamp>=slip$onset[i] & aere$timestamp<=slip$end[i]] <- 1
+  } else {
+    aere$asleep <- NA
+  }
+  
   if(!minimize) aere$day <- as.Date(trunc(aere$timestamp, "days"))
   if(minimize){
     aere$lightmean <- aere$lightpeak <- aere$xmin <- aere$EN <- aere$temperaturemean <- NULL
@@ -68,6 +77,7 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE){
             freq = freq, 
             slip = slip, 
             wins = wins,
+            sib = if(sib) inactivity_periods else NULL,
             class = c("afterGGIR", "data.frame"))
 }
 
@@ -106,7 +116,7 @@ summarizeGGIR1 <- function(x){
   file <- attr(x, "filename")
   # browser()
   id <- strsplit(file, "_")[[1]][1]
-  if(!"day" %in% names(x)) x$day <- as.Date(trunc(x$timestamp, "days"))
+  if(!"day" %in% names(x)) x$day <- as.Date(x$timestamp)
   stats <- function(.){
     day <- .$day[1]
     mean.enmo <- mean(.$ENMO)
@@ -130,15 +140,20 @@ summarizeGGIR1 <- function(x){
   xS <- split(x, x$day)
   res <- do.call(rbind, lapply(xS, stats))
   
-  uni <- with(attr(x, "slip"), data.frame(date2 = as.Date(strptime(calendar_date, "%d/%m/%Y")), sleeponset = sleeponset, wakeup = wakeup, sleepduration = SptDuration,
+  if(!identical(attr(x, "slip"), "missing")){
+    uni <- with(attr(x, "slip"), data.frame(date2 = as.Date(strptime(calendar_date, "%d/%m/%Y")), sleeponset = sleeponset, wakeup = wakeup, sleepduration = SptDuration,
                                           stringsAsFactors=FALSE))
-  offset <- which.min(as.Date(res$day)-uni$date2[1])
-  uni0 <- uni[1,]; uni0[] <- NA
-  algusse <- do.call(rbind, replicate(offset-1, uni0, simplify = FALSE))
-  uni <- rbind(algusse,uni)
-  loppu <- do.call(rbind, replicate(NROW(res)-NROW(uni), uni0, simplify = FALSE))
-  uni <- rbind(uni, loppu)
-  names(uni)[1] <- "date_sleep"
+    offset <- which.min(as.Date(res$day)-uni$date2[1])
+    uni0 <- uni[1,]; uni0[] <- NA
+    algusse <- do.call(rbind, replicate(offset-1, uni0, simplify = FALSE))
+    uni <- rbind(algusse,uni)
+    loppu <- do.call(rbind, replicate(NROW(res)-NROW(uni), uni0, simplify = FALSE))
+    uni <- rbind(uni, loppu)
+    names(uni)[1] <- "date_sleep"
+  } else {
+    naa <- rep(NA, NROW(res))
+    uni <- data.frame(date_sleep=naa,	sleeponset=naa,	wakeup=naa,	sleepduration=naa)
+  }
   res <- data.frame(id=id, file=file, res, uni, stringsAsFactors = FALSE)
   rownames(res) <- NULL
   res
