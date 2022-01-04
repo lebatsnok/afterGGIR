@@ -9,8 +9,8 @@ remotes::install_github("lebatsnok/afterGGIR")
 
 ### Simple workflow
 
-1) `doGGIR` -- runs g.shell.GGIR with "reasonable options" :) 
-2) `afterGGIR` -- extracts some important data from the GGIR results folder and makes a single compact *.rmd files for each source file
+1) `doGGIR` -- runs g.shell.GGIR with reasonable options (check the code for details:) 
+2) `afterGGIR` -- extracts some important data from the GGIR results folder and makes a single compact *.rmd file for each source file
 3) `summarizeGGIR` -- computes some summary statistics and (if you want) saves the result to an excel table
 
 Suppose you have your raw GeneActiv files in a folder called "precious". The analysis will then go as follows:
@@ -19,8 +19,9 @@ Suppose you have your raw GeneActiv files in a folder called "precious". The ana
 library(afterGGIR)
 doGGIR("precious")     # this step takes the most time
                        # GGIR's results will be found in results/output_precious/.........
-afterGGIR("precious")  # this crates a folder named "rda" wit one file for each raw file
+afterGGIR("precious")  # this creates a folder named "rda" with one file for each raw file
                        # these rda files contain ENMO aggregated by 1 second plus sleep data from GGIR
+                       # it's just the ENMO right now - more might be added as needed
 summarizeGGIR("rda", toexcel = TRUE)   # a simple day-level summary for all raw files
                                        # if toexcel=TRUE the result is saved as "results-precious.xlsx"
 ```
@@ -44,7 +45,7 @@ find_windows(E=expsamp, A = "rda", timevar = "time", idvar="id")
 ```
 
 
-### Resave
+### Resave files with encoding problems
 
 Resaving with `resave()` might save some of the files with encoding problems. For example, the error messages from GGIR with one file were:
 
@@ -71,4 +72,4 @@ resave("folder/oldfilename.bin", "folder/newfilename.bin")
 Now try GGIR with the resaved file. (And keep the old file at least for a while, until you have made sure that resaving solved the problem.)
 
 
-... more to follow
+### ... more to follow
