@@ -38,10 +38,20 @@ Load <- function (file, to.list = TRUE, Unlist = TRUE, spray = FALSE,
   NE
 }
 
+#' load ggir output from 'results' folder
+#' 
+#' Lorem ipsum
+#'
+#' @param FN file name or number 
+#' @param OD original directory name
+#' @param browse FALSE
+#'
+#' @return
+#' @export
 loadg <- function(FN, OD="", browse = FALSE){
   DIR <- paste0("results/output_", OD)
   if(is.character(FN)){
-    FN1 <- paste0("meta_", FN)
+    FN1 <- FN # paste0("meta_", FN)
   } else {
     FN1 <- dir(file.path(DIR, "meta/basic"))[[FN]]
     FN1 <- sub("\\.RData$", "", sub("^meta_", "", FN1)) 

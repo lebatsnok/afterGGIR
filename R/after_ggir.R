@@ -72,7 +72,7 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=FALSE){
   rownames(aere) <- NULL
   
   structure(aere, 
-            filename = basename(foo$ggir1$filename_dir),
+            filename = basename(foo$file),
             folder = foo$ggir1$filefoldername,
             freq = freq, 
             slip = slip, 
