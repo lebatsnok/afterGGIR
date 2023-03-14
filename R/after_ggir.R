@@ -140,8 +140,10 @@ summarizeGGIR1 <- function(x){
   xS <- split(x, x$day)
   res <- do.call(rbind, lapply(xS, stats))
   
-  if(!identical(attr(x, "slip"), "missing")){
-    uni <- with(attr(x, "slip"), data.frame(date2 = as.Date(strptime(calendar_date, "%d/%m/%Y")), sleeponset = sleeponset, wakeup = wakeup, sleepduration = SptDuration,
+  xslip <- attr(x, "slip")
+  
+  if(!identical(xslip, "missing") && is.data.frame(xslip) && nrow(xslip)>0){
+    uni <- with(xslip, data.frame(date2 = as.Date(strptime(calendar_date, "%d/%m/%Y")), sleeponset = sleeponset, wakeup = wakeup, sleepduration = SptDuration,
                                           stringsAsFactors=FALSE))
     offset <- which.min(as.Date(res$day)-uni$date2[1])
     uni0 <- uni[1,]; uni0[] <- NA
