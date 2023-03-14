@@ -4,12 +4,10 @@
 \alias{doGGIR}
 \title{Title}
 \usage{
-doGGIR(indir, outdir)
+doGGIR(indir)
 }
 \arguments{
 \item{indir}{}
-
-\item{outdir}{}
 }
 \value{
 system time
