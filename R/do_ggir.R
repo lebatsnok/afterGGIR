@@ -1,13 +1,10 @@
 #' Title
 #'
 #' @param indir 
-#' @param outdir 
 #'
 #' @return system time
 #' @export
-#'
-#' @examples
-doGGIR <- function(indir, outdir) {
+doGGIR <- function(indir) {
   system.time({
   if(!file.exists("results")) dir.create("results")
   GGIR::g.shell.GGIR(

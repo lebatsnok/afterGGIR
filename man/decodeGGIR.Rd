@@ -15,9 +15,6 @@ decodeGGIR(x, folder = NULL, minimize = FALSE, sib = FALSE)
 
 \item{sib}{set TRUE to report sustained inactivity periods (attr(res, "sib"))}
 }
-\value{
-
-}
 \description{
 Lorem ipsum
 }

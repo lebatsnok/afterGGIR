@@ -11,9 +11,6 @@ tozoo(x, ...)
 
 \item{...}{}
 }
-\value{
-
-}
 \description{
 tozoo
 }

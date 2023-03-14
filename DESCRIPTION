@@ -9,4 +9,4 @@ License: $$$
 Encoding: UTF-8
 LazyData: true
 Depends: GGIR, openxlsx, zoo
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3

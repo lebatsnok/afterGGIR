@@ -13,9 +13,6 @@ afterGGIR(datadir, sib = FALSE, verbose = TRUE)
 
 \item{verbose}{set FALSE to suppress bloody messages}
 }
-\value{
-
-}
 \description{
 afterGGIR
 }

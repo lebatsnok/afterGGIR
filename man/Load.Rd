@@ -26,9 +26,6 @@ Load(
 
 \item{Attach}{}
 }
-\value{
-
-}
 \description{
 Load
 }
