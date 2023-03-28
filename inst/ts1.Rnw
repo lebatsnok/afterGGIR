@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\section*{Lp uuringus osaleja}
+
+<<echo=FALSE>>=
+library(ggplot2)
+library(afterGGIR)
+library(flextable)
+filename <- readLines("filename.txt") 
+foo <- Load(filename)
+sf <- summarizeGGIR1(foo)[, -1]
+if(nrow(sf)>7) sf <- sf[2:8,]
+
+nxdala_mod <- sum(sf$mod)
+nxdala_vig <- sum(sf$vig)
+NR <- nrow(sf)
+s6num <- if(nxdala_vig >= 75 || nxdala_mod + nxdala_vig >=150) "Teie liikumisaktiivsus jäi soovitusliku normi piiresse." else "Teie liikumisaktiivsus jäi alla soovitusliku normi."
+s6num2 <- if(nxdala_vig/7 >= 75/7 || (nxdala_mod + nxdala_vig)/7 >=150/7) "Teie liikumisaktiivsus keskmisel uuringupäeval jäi soovitusliku normi piiresse." else "Teie liikumisaktiivsus keskmisel uuringupäeval jäi alla soovitusliku normi."
+@
+
+
+\noindent
+Anname tagasisidet Teie liikumisaktiivsuse kohta nendel päevadel kui Te kandsite aktiivsusmonitori. Joonisel on välja toodud mõõdukas ja tugev liikumisaktiivsus ning tabelis on lisaks välja toodud ka madal ning kerge liikumisaktiivsus minutites.
+
+~\\
+
+
+<<echo = FALSE>>=
+msg <- sprintf("Teie nädala mõõduka liikumisaktiivsuse summa oli %i minutit ja tugeva liikumisaktiivsuse summa oli %i minutit. %s", round(nxdala_mod), round(nxdala_vig), s6num)
+msg2 <- sprintf("Keskmisel uuringupäeval oli teil mõõdukat liikumisaktiivsust oli %i minutit ja tugevat liikumisaktiivsust %i minutit. %s", round(nxdala_mod/7), round(nxdala_vig), s6num2)
+if(NR == 7) MSG <- msg else MSG <- msg2
+@
+
+\noindent
+Soovituslikuks normiks on nädalas vähemalt 150 - 300 minutit mõõduka intensiivsusega aeroobset liikumist või vähemalt 75 - 150 minutit tugeva intensiivsusega aeroobset liikumist, mis tagab positiivse efekti tervisele. \Sexpr{MSG}
+
+
+~\\~\\
+
+\noindent
+<<fig=TRUE, width=9, height=6, echo=FALSE>>=
+f1 <- t(as.matrix(sf[, c("mod", "vig")]))
+colnames(f1) <- factor(sf$wd, levels=1:7, labels=c("E", "T", "K", "N", "R", "L", "P"))
+MIN <- 0
+MAX <- round(max(f1)/5, 0)*5
+barplot(f1, beside=TRUE, col=NA, border=NA, axes=FALSE, ylim=c(0,MAX+7), 
+        main="Mõõdukas ja tugev liikumisaktiivsus uuringupäevadel")
+axis(2, at=seq(0, MAX, 10))
+abline(h=seq(0, 120, 5), col="gray", lty="dotted")
+barplot(f1, beside=TRUE, col=c("dark green", "light green"),
+        add=TRUE)
+#abline(h=seq(0, 120, 5), col="white", lty="dotted", lwd=0.1)
+legend(1, MAX+6, col=c("dark green", "light green"), pch=15, cex=1.25, legend=c("Mõõdukas LA", "Tugev LA"), ncol=2, bty="n", bg="white")
+@
+
+~\\~\\
+
+\noindent
+<<results=tex, echo=FALSE>>=
+t1 <- sf[, c("day", "wd", "sed", "lig", "mod", "vig")]
+t1$day <- format(t1$day, "%d.%m.%Y")
+t1$wd <- factor(sf$wd, levels=1:7, labels=c("E", "T", "K", "N", "R", "L", "P"))
+t1$wd <- paste(as.character(t1$wd), ifelse(sf$weartime < 1440, "*", ""))
+names(t1) <- c("Kuupäev", "Nädalapäev", "Madal LA", "Kerge LA", "Mõõdukas LA", "Tugev LA")
+rownames(t1) <- NULL
+library(knitr)
+kable(t1[,-3], format='latex', digits=0)
+@
+
+~\\LA - liikumisaktiivsus; * - aktiivsusmonitori kanti vähem kui 24h
+
+
+\end{document}

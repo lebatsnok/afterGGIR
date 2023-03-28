@@ -21,7 +21,7 @@ doGGIR1 <- function(indir, III = NULL, SINK = TRUE) {
       cat("---\nProcessing file no. ", JJJ, ": ", FILES[JJJ], "\n")
       if(SINK) {
         sink(paste0("log-", indir, ".txt"), append = TRUE)
-        cat("---\nProcessing file no. ", JJJ, ": ", FILES[JJJ], "---\n")
+        cat("---\nProcessing file no. ", JJJ, ": ", FILES[JJJ], "\n")
       }
       res <- try(GGIR(
         f0 = JJJ, f1 = JJJ,
