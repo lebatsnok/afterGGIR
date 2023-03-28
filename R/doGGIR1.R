@@ -18,9 +18,9 @@ doGGIR1 <- function(indir, III = NULL, SINK = TRUE) {
       MAX <- max(III)
     }
     for(JJJ in MIN:MAX){
-      cat("---\nProcessing file no. ", JJJ, ": ", FILES[JJJ], "---\n")
+      cat("---\nProcessing file no. ", JJJ, ": ", FILES[JJJ], "\n")
       if(SINK) {
-        sink(paste0("log-", indir, ".txt"))
+        sink(paste0("log-", indir, ".txt"), append = TRUE)
         cat("---\nProcessing file no. ", JJJ, ": ", FILES[JJJ], "---\n")
       }
       res <- try(GGIR(
@@ -117,11 +117,9 @@ doGGIR1 <- function(indir, III = NULL, SINK = TRUE) {
         boutcriter.in = 0.9, boutcriter.lig = 0.8, boutcriter.mvpa = 0.8,
       ))
       if(inherits(res, "try-error")) cat("\n---", "error with ", FILES[JJJ], "---\n")
-      cat("---\n")
       if(SINK)  {
         sink(NULL)
         if(inherits(res, "try-error")) cat("\nerror with ", FILES[JJJ], ":\n", res[1], "\n")
-        cat("---\n")
       }
     } # END FOR
   })  # CLOSING BRACKETS FOR SYSTEM:TIME

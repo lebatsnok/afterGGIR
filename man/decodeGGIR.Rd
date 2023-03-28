@@ -4,7 +4,7 @@
 \alias{decodeGGIR}
 \title{decode GGIR}
 \usage{
-decodeGGIR(x, folder = NULL, minimize = FALSE, sib = FALSE)
+decodeGGIR(x, folder = NULL, minimize = FALSE, sib = TRUE)
 }
 \arguments{
 \item{x}{Number or name of the file to be read in}
