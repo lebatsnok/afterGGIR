@@ -4,12 +4,12 @@
 \alias{doGGIR1}
 \title{doGGIR one file at a time}
 \usage{
-doGGIR1(indir, III = NULL)
+doGGIR1(indir, III = NULL, SINK = TRUE)
 }
 \arguments{
-\item{indir}{}
+\item{indir}{Folder name (*.bin files)}
 
-\item{III}{}
+\item{III}{Integer vector - rank number[s] of files to be processed. Can be NULL (default) - in that case, all files in the folder will included}
 }
 \value{
 system time

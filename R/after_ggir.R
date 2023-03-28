@@ -37,7 +37,7 @@ afterGGIR <- function(datadir, sib=FALSE, verbose=TRUE){
 #'
 #' @return
 #' @export
-decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=FALSE){
+decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=TRUE){
   if(!is.null(folder)) foo <- loadg(x, folder) else foo <- x
   
   freq <- as.numeric(as.character(foo$ggir1$I$header["Measurement_Frequency",1]))
@@ -45,7 +45,7 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=FALSE){
   mika <- foo$ggir1$M$metalong
   aere <- foo$ggir2$IMP$metashort
   if(sib) inactivity_periods <- foo$ggir3$sib.cla.sum ## kestvad mitteaktiivsusperioodid
-  slip <- foo$ggir4  ## uneajad päevade kaupa
+  slip <- foo$ggir4$nightsummary  ## uneajad päevade kaupa
   sleepOK <- !identical(slip, "missing")  ## kas GGIRRi uneanalüüs õnnestus??
   posify <- function(.) strptime(., "%Y-%m-%dT%H:%M:%S")
   starta <- posify(aere$timestamp[1])
