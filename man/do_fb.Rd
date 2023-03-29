@@ -4,7 +4,14 @@
 \alias{do_fb}
 \title{Simple feedback}
 \usage{
-do_fb(DIR = "rda", ij = TRUE, UNLINK = TRUE, UNLINK.ALL = TRUE)
+do_fb(
+  DIR = "rda",
+  ij = TRUE,
+  ver = 1,
+  fun = NULL,
+  UNLINK = TRUE,
+  UNLINK.ALL = FALSE
+)
 }
 \arguments{
 \item{DIR}{}

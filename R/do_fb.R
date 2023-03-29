@@ -7,7 +7,7 @@
 #'
 #' @return nothing
 #' @export
-do_fb <- function(DIR = "rda", ij=TRUE, ver = 1, fun = NULL, UNLINK=TRUE, UNLINK.ALL=TRUE){
+do_fb <- function(DIR = "rda", ij=TRUE, ver = 1, fun = NULL, UNLINK=TRUE, UNLINK.ALL=FALSE){
   tsfn <- ver
   usesweave <- ver %in% 1 || identical(fun, utils::Sweave)
   template <- switch(ver, "1" = "ts1.Rnw", "2"="ts2.Rmd")
@@ -22,7 +22,7 @@ do_fb <- function(DIR = "rda", ij=TRUE, ver = 1, fun = NULL, UNLINK=TRUE, UNLINK
     nfn <- paste0(TSF, "/", strsplit(basename(iii),"_")[[1]][1], ".pdf")
     if(usesweave) {
       # if using Sweave
-      try(fun(template))
+      try(utils::Sweave(template))
       try({
       tools::texi2pdf("ts1.tex", clean=TRUE)
       file.rename("ts1.pdf", nfn)
