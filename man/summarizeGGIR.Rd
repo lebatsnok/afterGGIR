@@ -11,6 +11,9 @@ summarizeGGIR(fn, toexcel = FALSE)
 
 \item{toexcel}{}
 }
+\value{
+summary
+}
 \description{
 summarizeGGIR
 }

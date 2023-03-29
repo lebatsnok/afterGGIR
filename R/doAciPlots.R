@@ -3,10 +3,8 @@
 #'
 #' @param x 
 #'
-#' @return
+#' @return an accelerate::acc object
 #' @export
-#'
-#' @examples
 toacc <- function(x){
   if(is.character(x) && file.exists(x)) x <- afterGGIR::Load(x)
   X <- with(x, data.frame(Activity1 = ENMO, ENMO = ENMO, asleep=asleep, nonwearscore = nonwearscore, clippingscore=clippingscore, anglez = anglez))
@@ -33,10 +31,8 @@ cutoffs.ENMO <- make.cutoffs("ENMO", 1, Sedentary = 0, Light = 52/1000, Moderate
 #'
 #' @param x 
 #'
-#' @return
+#' @return nothing
 #' @export
-#'
-#' @examples
 makeAciPlots <- function(x){
   if(is.character(x)) foo <- Load(x) else foo<-x
   # stringi::stri_locale_list()
@@ -75,10 +71,8 @@ makeAciPlots <- function(x){
 #' @param select 
 #' @param ... 
 #'
-#' @return
+#' @return nothing (a plot is drawn)
 #' @export
-#'
-#' @examples
 aciPlot2 <- function(D, cutname = "Evenson", cats = c("Sedentary", "Light", "Moderate", "Vigorous"), plot=TRUE, select = Wkdy %in% 0:6, ...){
   if(is.acc(D)) {
     CO <- get(paste0("Cutoffs.", cutname), .GlobalEnv)
@@ -122,10 +116,8 @@ aciPlot2 <- function(D, cutname = "Evenson", cats = c("Sedentary", "Light", "Mod
 #' @param style 
 #' @param lz 
 #'
-#' @return
+#' @return a formatted date (string)
 #' @export
-#'
-#' @examples
 fmth <- function(x, units="mins", style=";", lz = FALSE) {
   if(units=="mins") x <- x/60
   if(units=="secs") x <- x/3600
@@ -144,10 +136,8 @@ fmth <- function(x, units="mins", style=";", lz = FALSE) {
 #' @param YLAB 
 #' @param MAIN 
 #'
-#' @return
+#' @return nothing
 #' @export
-#'
-#' @examples
 ctaplot <- function(x, FUN=mean, XLAB="Kellaaeg", YLAB="Aktiivsus", MAIN=NULL){
   if(is.null(MAIN)){
     op <- par(mar=abs(par()$mar-c(0,0,3.5, 1.5)))
@@ -169,10 +159,8 @@ ctaplot <- function(x, FUN=mean, XLAB="Kellaaeg", YLAB="Aktiivsus", MAIN=NULL){
 #'
 #' @param fn 
 #'
-#' @return
+#' @return nothing
 #' @export
-#'
-#' @examples
 dorender <- function(fn){
   if(!file.exists("ts")) dir.create("ts")
   save(fn, file="temp.rda")

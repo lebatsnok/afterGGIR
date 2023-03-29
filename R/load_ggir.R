@@ -7,10 +7,8 @@
 #' @param delete.parent 
 #' @param Attach 
 #'
-#' @return
+#' @return value
 #' @export
-#'
-#' @examples
 Load <- function (file, to.list = TRUE, Unlist = TRUE, spray = FALSE, 
                   delete.parent = FALSE, Attach = FALSE) 
 {
@@ -46,8 +44,7 @@ Load <- function (file, to.list = TRUE, Unlist = TRUE, spray = FALSE,
 #' @param OD original directory name
 #' @param browse FALSE
 #'
-#' @return
-#' @export
+#' @return value
 loadg <- function(FN, OD="", browse = FALSE){
   DIR <- paste0("results/output_", OD)
   if(is.character(FN)){

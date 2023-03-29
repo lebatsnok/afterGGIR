@@ -6,10 +6,8 @@
 #' @param IN 
 #' @param OUT 
 #'
-#' @return
+#' @return a value
 #' @export
-#'
-#' @examples
 resave <-   function(IN, OUT) {
   CIN <- file(IN, "r")
   COUT <- file(OUT, "w")

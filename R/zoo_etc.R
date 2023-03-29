@@ -4,7 +4,7 @@
 #' @param x 
 #' @param ... 
 #'
-#' @return
+#' @return a zoo object
 #' @export
 tozoo <- function(x, ...) {
     #wins <- attr(x, "wins")

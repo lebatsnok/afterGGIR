@@ -13,6 +13,9 @@ big_fb(x, DAYS = TRUE, PDF = FALSE)
 
 \item{PDF}{}
 }
+\value{
+nothing
+}
 \description{
 Plot raw data
 }

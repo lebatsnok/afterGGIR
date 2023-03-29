@@ -13,6 +13,9 @@ reintegrate2(x, TO = 60, ...)
 
 \item{...}{currently ignored}
 }
+\value{
+a value
+}
 \description{
 "Reintegrate i.e.
 }

@@ -44,10 +44,8 @@ do_fb <- function(DIR = "rda", ij=TRUE, ver = 1, fun = NULL, UNLINK=TRUE, UNLINK
 #' @param DAYS 
 #' @param PDF 
 #'
-#' @return
+#' @return nothing 
 #' @export
-#'
-#' @examples
 big_fb <- function(x, DAYS=TRUE, PDF=FALSE){
   brx <- c(0, 52, 192, 540, Inf)/1000
   if(is.character(x)){

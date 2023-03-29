@@ -13,6 +13,9 @@ loadg(FN, OD = "", browse = FALSE)
 
 \item{browse}{FALSE}
 }
+\value{
+value
+}
 \description{
 Lorem ipsum
 }

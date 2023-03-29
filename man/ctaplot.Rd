@@ -17,6 +17,9 @@ ctaplot(x, FUN = mean, XLAB = "Kellaaeg", YLAB = "Aktiivsus", MAIN = NULL)
 
 \item{MAIN}{}
 }
+\value{
+nothing
+}
 \description{
 Ctaplot
 }

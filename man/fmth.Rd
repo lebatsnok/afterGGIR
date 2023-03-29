@@ -15,6 +15,9 @@ fmth(x, units = "mins", style = ";", lz = FALSE)
 
 \item{lz}{}
 }
+\value{
+a formatted date (string)
+}
 \description{
 Format dates
 }

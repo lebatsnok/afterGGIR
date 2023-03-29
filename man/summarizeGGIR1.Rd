@@ -9,6 +9,9 @@ summarizeGGIR1(x)
 \arguments{
 \item{x}{}
 }
+\value{
+summary
+}
 \description{
 summarizeGGIR1
 }

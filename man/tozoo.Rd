@@ -11,6 +11,9 @@ tozoo(x, ...)
 
 \item{...}{}
 }
+\value{
+a zoo object
+}
 \description{
 tozoo
 }

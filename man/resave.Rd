@@ -11,6 +11,9 @@ resave(IN, OUT)
 
 \item{OUT}{}
 }
+\value{
+a value
+}
 \description{
 Re-saves a text file (which can be a *.bin file from GeneActiv) line by line.
 This will (in many cases!) get rid of code table conflicts

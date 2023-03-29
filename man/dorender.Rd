@@ -9,6 +9,9 @@ dorender(fn)
 \arguments{
 \item{fn}{}
 }
+\value{
+nothing
+}
 \description{
 Dorender (chk if needed?)
 }

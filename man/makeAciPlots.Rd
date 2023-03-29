@@ -9,6 +9,9 @@ makeAciPlots(x)
 \arguments{
 \item{x}{}
 }
+\value{
+nothing
+}
 \description{
 MakeAciPlots
 }

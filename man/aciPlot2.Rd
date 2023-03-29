@@ -26,6 +26,9 @@ aciPlot2(
 
 \item{...}{}
 }
+\value{
+nothing (a plot is drawn)
+}
 \description{
 aciPlot2
 }

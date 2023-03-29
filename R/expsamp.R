@@ -18,8 +18,6 @@
 #'
 #' @return A data frame (E) with extra variables added
 #' @export
-#'
-#' @examples
 find_windows <- function(E, A = "rda", mins = 30, codevar="id", timevar = "time", extramins = 5 ,
                          cuts = c(sed=0, lig = 52, mod = 192, vig = 540)){
   require(zoo)

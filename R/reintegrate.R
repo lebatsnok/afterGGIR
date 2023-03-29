@@ -4,7 +4,7 @@
 #' @param TO the desired resolution ("epoch") in seconds
 #' @param ... currently ignored
 #'
-#' @return
+#' @return a value
 #' @export
 reintegrate2 <- function (x, TO = 60,  ...) 
 {

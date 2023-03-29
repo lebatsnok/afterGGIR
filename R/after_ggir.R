@@ -4,7 +4,7 @@
 #' @param sib Set TRUE to include a table of sustained inactivity periods from GGIR output
 #' @param verbose set FALSE to suppress bloody messages
 #'
-#' @return
+#' @return an afterGGIR object
 #' @export
 afterGGIR <- function(datadir, sib=FALSE, verbose=TRUE){
   ggirrdirr <- paste0("results/output_", datadir, "/meta/basic")
@@ -35,7 +35,7 @@ afterGGIR <- function(datadir, sib=FALSE, verbose=TRUE){
 #' @param minimize set TRUE to forget some of the data (mean light, temperature etc)
 #' @param sib set TRUE to report sustained inactivity periods (attr(res, "sib"))
 #'
-#' @return
+#' @return lorem ipsum
 #' @export
 decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=TRUE){
   if(!is.null(folder)) foo <- loadg(x, folder) else foo <- x
@@ -86,10 +86,8 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=TRUE){
 #' @param fn 
 #' @param toexcel 
 #'
-#' @return
+#' @return summary
 #' @export
-#'
-#' @examples
 summarizeGGIR <- function(fn, toexcel = FALSE){
   filelist <- dir(fn, full.names = TRUE)
   res <- lapply(filelist, function(x) summarizeGGIR1(Load(x)))
@@ -107,10 +105,8 @@ summarizeGGIR <- function(fn, toexcel = FALSE){
 #'
 #' @param x 
 #'
-#' @return
+#' @return summary
 #' @export
-#'
-#' @examples
 summarizeGGIR1 <- function(x){
   #browser()
   file <- attr(x, "filename")

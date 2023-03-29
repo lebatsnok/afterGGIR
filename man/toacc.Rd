@@ -9,6 +9,9 @@ toacc(x)
 \arguments{
 \item{x}{}
 }
+\value{
+an accelerate::acc object
+}
 \description{
 Convert an afterGGIR object to accelerate::acc
 }
