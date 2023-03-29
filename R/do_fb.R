@@ -1,22 +1,53 @@
-do_fb <- function(DIR = "rda", ij=TRUE, UNLINK=TRUE, UNLINK.ALL=TRUE){
-  if(!file.exists("ts1.Rnw")) file.copy(system.file("ts1.Rnw", package="afterGGIR"), "ts1.Rnw")
+#' Simple feedback
+#'
+#' @param DIR 
+#' @param ij 
+#' @param UNLINK 
+#' @param UNLINK.ALL 
+#'
+#' @return nothing
+#' @export
+do_fb <- function(DIR = "rda", ij=TRUE, ver = 1, fun = NULL, UNLINK=TRUE, UNLINK.ALL=TRUE){
+  tsfn <- ver
+  usesweave <- ver %in% 1 || identical(fun, utils::Sweave)
+  template <- switch(ver, "1" = "ts1.Rnw", "2"="ts2.Rmd")
+  if(is.null(tsfn)) tsfn <- ver
+  if(!file.exists(template)) file.copy(system.file(template, package="afterGGIR"), template)
   TSF <- sub("rda", "ts", DIR)
   if(!file.exists(TSF)) dir.create(TSF)
   fns <- dir(DIR, full.names = TRUE)
+
   for(iii in fns[ij]){
-    writeLines(iii, "filename.txt")
-    try(Sweave("ts1.Rnw"))
+    writeLines(iii, ".filename")
     nfn <- paste0(TSF, "/", strsplit(basename(iii),"_")[[1]][1], ".pdf")
-    try({
+    if(usesweave) {
+      # if using Sweave
+      try(fun(template))
+      try({
       tools::texi2pdf("ts1.tex", clean=TRUE)
       file.rename("ts1.pdf", nfn)
-    })
+      })} else {
+        # alternatively, using Markdown
+        try(rmarkdown::render(template, output_file = nfn))
+      }
   }
-  if(UNLINK) unlink(c("ts1-003.pdf", "ts1-concordance.tex", "ts1.aux", 
+  if(usesweave && UNLINK){
+    unlink(c("ts1-003.pdf", "ts1-concordance.tex", "ts1.aux", 
                         "ts1.log", "ts1.tex"))
-  if(UNLINK.ALL) unlink("ts1.Rnw")
+  }
+  if(UNLINK.ALL) unlink(template)
 }
 
+#' Plot raw data
+#'
+#' @param x 
+#' @param DAYS 
+#' @param PDF 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 big_fb <- function(x, DAYS=TRUE, PDF=FALSE){
   brx <- c(0, 52, 192, 540, Inf)/1000
   if(is.character(x)){
@@ -42,4 +73,10 @@ big_fb <- function(x, DAYS=TRUE, PDF=FALSE){
     #browser()
     title(paste(id, foo$date[[1]]))
   }
+}
+
+do_fb2 <- function(fn, fbdir = "ts/"){
+  if(!file.exists(fbdir)) dir.create(fbdir)
+  writeLines(fn, ".filename")
+  rmarkdown::render("Rnw/tagasiside.Rmd", output_file = paste0("../", fbdir, sub("\\.rda$", ".pdf", basename(fn))))
 }

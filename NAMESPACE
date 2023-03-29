@@ -2,9 +2,11 @@
 
 export(Load)
 export(afterGGIR)
+export(big_fb)
 export(decodeGGIR)
 export(doGGIR)
 export(doGGIR1)
+export(do_fb)
 export(find_windows)
 export(loadg)
 export(reintegrate2)

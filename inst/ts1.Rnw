@@ -10,7 +10,7 @@
 library(ggplot2)
 library(afterGGIR)
 library(flextable)
-filename <- readLines("filename.txt") 
+filename <- readLines(".filename") 
 foo <- Load(filename)
 sf <- summarizeGGIR1(foo)[, -1]
 if(nrow(sf)>7) sf <- sf[2:8,]
