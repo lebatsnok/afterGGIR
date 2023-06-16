@@ -50,8 +50,8 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=TRUE){
   ## mida teha kui foo$ggir4 == "missing"
   ##
   ##
-  slip <- foo$ggir4$nightsummary  ## uneajad päevade kaupa
   sleepOK <- !identical(foo$ggir4, "missing")  ## kas GGIRRi uneanalüüs õnnestus??
+  slip <- if(sleepOK) foo$ggir4$nightsummary  else "missing" ## uneajad päevade kaupa
   posify <- function(.) strptime(., "%Y-%m-%dT%H:%M:%S")
   starta <- posify(aere$timestamp[1])
   startm <- posify(mika$timestamp[1])
