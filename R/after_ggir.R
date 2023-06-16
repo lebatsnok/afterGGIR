@@ -45,8 +45,13 @@ decodeGGIR <- function(x, folder = NULL, minimize=FALSE, sib=TRUE){
   mika <- foo$ggir1$M$metalong
   aere <- foo$ggir2$IMP$metashort
   if(sib) inactivity_periods <- foo$ggir3$sib.cla.sum ## kestvad mitteaktiivsusperioodid
+  ##
+  ##
+  ## mida teha kui foo$ggir4 == "missing"
+  ##
+  ##
   slip <- foo$ggir4$nightsummary  ## uneajad päevade kaupa
-  sleepOK <- !identical(slip, "missing")  ## kas GGIRRi uneanalüüs õnnestus??
+  sleepOK <- !identical(foo$ggir4, "missing")  ## kas GGIRRi uneanalüüs õnnestus??
   posify <- function(.) strptime(., "%Y-%m-%dT%H:%M:%S")
   starta <- posify(aere$timestamp[1])
   startm <- posify(mika$timestamp[1])
