@@ -7,7 +7,7 @@
 doGGIR <- function(indir) {
   system.time({
   if(!file.exists("results")) dir.create("results")
-  GGIR::g.shell.GGIR(
+  GGIR(
   # part 1
   #This function will pre-process accelerometer raw data to summarize and clean the signal
   # Rowlands et al http://dx.doi.org/10.1249/MSS.0000000000000978 (on GGIR with Actigraph vs genectiv)
